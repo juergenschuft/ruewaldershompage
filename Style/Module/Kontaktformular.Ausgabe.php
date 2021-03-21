@@ -1,5 +1,4 @@
 <?php
-
 /***********************************************
  * CONTENIDO MODUL - OUTPUT
  *
@@ -7,9 +6,12 @@
  * Author      :     Andreas Kummer
  * Copyright   :     mumprecht & kummer w3concepts
  * Created     :     20-08-2004
- * Modified    :     20-08-2004
+ * Modified    :     08-11-2020
+ * modified for captcha von Volker Uhlig
  ************************************************/
 
+session_start(); // session is required by captcha
+ 
 class w3form {
     var $email, $aufgedroeselt, $form, $formularFeld, $user_Email, $user_From;
 
@@ -130,15 +132,14 @@ class w3form {
         echo '<input class="'.$class.'" type="hidden" name="sent" value="true" />';
         $formular = $this->form['form'];
         $formulardaten = $this->formularInterpretation($formular);
-        $formular = explode('###',$formular);
+        $formular = explode('###',$formular);    //uv suche nach den ### als Trenner
         foreach ($formular as $formularteil) {
             if (!empty($formulardaten["{$formularteil}"])) {
-                $this->formularFeld($formulardaten["{$formularteil}"],$sent);
+                $this->formularFeld($formulardaten["{$formularteil}"],$sent);  //uv hier wird das Formularfeld ausgegeben
             } else {
                 echo $formularteil;
             }
         }
-
         echo '</form>';
     }
 
@@ -234,6 +235,9 @@ class w3form {
                     }
                 }
                 break;
+            case 'captcha' :
+               echo "<img src=\"verein/gaestebuch/captcha.html?RELOAD=\" alt=\"Captcha\" title=\"Klicken, um das Captcha neu zu laden\" onclick=\"this.src+=1;document.getElementById('captcha_code').value='';\" width=\"140\" height=\"40\">";
+               break;  
         }
     }
 
@@ -253,13 +257,21 @@ class w3form {
 
     // PRIVATE
     function success() {
-        $this->sendEmail();
+        $this->sendEmail();    //uv nachdem die Mail versendet wurde, wird die Antwort angezeigt
         echo $this->form['answer'];
     }
 
     // PRIVATE
     function formularFeldKorrekt($feld) {
-
+        // prüfung ob Captcha-Code 
+        if ($feld['name'] == 'captcha_code') { 
+            if ($_POST['captcha_code'] != $_SESSION['captcha_spam']) {
+//          echo 'Du hast den Captcha-Code falsch eingegeben!';
+            echo 'Captcha-Code falsch: '.$_POST['captcha_code'].' session: '.$_SESSION['captcha_spam'];
+            return false;
+            }
+        }           
+        
         // prüfung, ob pflichtfeld vorhanden
         if (!empty($feld['mandatory']) && $feld['mandatory'] == 'true' && empty($_POST["{$feld['name']}"])) return false;
 
@@ -300,7 +312,14 @@ class w3form {
 
         return $feld;
     }
-
+    
+     //PRIVATE
+    function add_captcha() {
+        echo "<p>Um zu beweisen, dass Du kein Spam-Roboter bist, trage bitte in das Eingabefeld unten rechts die Zeichenfolge ein, die Du auf dem Bild links daneben erkennst.</p>";
+        echo "<img src='verein/gaestebuch/captcha.html?RELOAD=' alt='Captcha' title='Klicken, um das Captcha neu zu laden' onclick='this.src+=1;document.getElementById('captcha_code').value='';' width=140 height=40 />";
+        echo "<input type='text' name='captcha_code' size='11'/>";
+    }
+    
     //PUBLIC
     function process() {
         if (!isset($_POST['sent'])) {
@@ -320,6 +339,7 @@ if ($edit) {
     echo "<p>Hier ist die Ausgabe einzugeben, die erscheint, wenn das Formular erfolgreich prozessiert worden ist:</p>";
     echo "CMS_HTML[4]";
 } else {
+
     $formular = new w3form();
     $formular->addEmailAdress("CMS_VALUE[0]");
     $formular->setEmailSubject("CMS_VALUE[1]");

@@ -5,7 +5,8 @@
 * Author      :     Andreas Kummer
 * Copyright   :     mumprecht & kummer w3concepts
 * Created     :     20-08-2004
-* Modified    :     20-08-2004
+* Modified    :     05.12.2020 uhligv
+* Ausgabe der Konfiguration
 ************************************************/
 
 
@@ -27,7 +28,7 @@ echo "<table cellspacing=\"0\" cellpadding=\"10\" border=\"0\"><tr valign=\"top\
         echo "<td><input type=\"text\" name=\"CMS_VAR[4]\" value=\"CMS_VALUE[4]\" size=\"30\" /></td></tr>";
 
 
-    echo "<tr><td>Klasse der Inpuntfelder und der Textareas:</td>";
+    echo "<tr><td>Klasse der Inputfelder und der Textareas:</td>";
         echo "<td><input type=\"text\" name=\"CMS_VAR[5]\" value=\"CMS_VALUE[5]\" size=\"30\" /></td></tr>";
-
-    echo "</table>";
+        
+echo "</table>";
