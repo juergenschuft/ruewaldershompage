@@ -205,29 +205,29 @@ class w3form {
             case 'checkbox':
                 $formularbezeichner = preg_split('[\[|\]]',$attribute['name']);
                 if ($sent) {
-                    if ($_POST["{$formularbezeichner[0]}"]["{$formularbezeichner[1]}"] == $attribute['value']) {
-                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['value']}\" checked=\"checked\"/>";
+                    if ($_POST[$formularbezeichner[0]] == $attribute['name']) {
+                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['name']}\" checked/>";
                     } else {
-                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['value']}\"/>";
+                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['name']}\"/>";
                     }
                 } else {
                     if (!empty($attribute['selected']) && $attribute['selected'] == 'true') {
-                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['value']}\" checked=\"checked\"/>";
+                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['name']}\" checked/>";
                     } else {
-                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['value']}\"/>";
+                        echo "<input class=\"$class\" type=\"checkbox\" $parameter value=\"{$attribute['name']}\"/>";
                     }
                 }
                 break;
             case 'radio':
                 if (!empty($_POST["{$attribute['name']}"])) {
                     if ($_POST["{$attribute['name']}"] == $attribute['value']) {
-                        echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\" checked=\"checked\"/>";
+                        echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\" checked/>";
                     } else {
                         echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\" />";
                     }
                 } else {
                     if (!empty($attribute['selected']) && $attribute['selected'] == 'true') {
-                        echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\" checked=\"checked\"/>";
+                        echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\" checked/>";
                     } else {
                         echo "<input class=\"$class\" type=\"radio\" $parameter value=\"{$attribute['value']}\"/>";
                     }
