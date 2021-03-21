@@ -9,6 +9,8 @@
 * Created     :     2005-03-14
 * Modified    :     2006-01-16
 ************************************************/
+// fuer captcha, vor irgendeiner ausgabe eine session starten
+session_start();
 
 // Mailer-Klasse einbinden
 cInclude('classes',  'class.phpmailer.php');
@@ -328,8 +330,8 @@ Eintrag:
   $mail = new phpmailer();
   $mail->AddAddress($emails_an);
   $mail->From     = $emails_an;
-  $mail->FromName = "Gï¿½stebuch";
-  $mail->Subject  = "Neuer Gï¿½stebucheintrag";
+  $mail->FromName = "Gästebuch";
+  $mail->Subject  = "Neuer Gästebucheintrag";
   $mail->Body     = $mailtext;
   if(!$mail->Send()){
     $notsend .= $lngNews["mailcouldnotbesend1"].$to.$lngNews["mailcouldnotbesend2"] . "<br>";
@@ -343,7 +345,7 @@ global $db, $cfg, $client, $lang, $idart, $direkt_sichtbar, $email_benachrichtig
   // Initialisieren der Variablen
   $error = "";
 
-  // Name ï¿½berprï¿½fen
+  // Name überprüfen
   if ($_POST['name'] == "") {
     $error = "Bitte geben Sie Ihren Namen an!";
   }
@@ -351,7 +353,7 @@ global $db, $cfg, $client, $lang, $idart, $direkt_sichtbar, $email_benachrichtig
     $name = htmlentities(strip_tags($_POST['name']));
   }
 
-  // Email ï¿½berprï¿½fen
+  // Email überprüfen
   $email_pattern = '/^[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}$/i';
   if (($_POST['email'] == "") || (preg_match($email_pattern, $_POST['email']))) {
     $email = $_POST['email'];
@@ -360,13 +362,13 @@ global $db, $cfg, $client, $lang, $idart, $direkt_sichtbar, $email_benachrichtig
     $error = "Bitte geben Sie eine gï¿½ltige Email-Adresse an!";
   }
 
-  // URL ï¿½berprï¿½fen
+  // URL überprüfen
   if ($_POST['url'] != "") {
     $url = htmlentities(strip_tags($_POST['url']));
     $url = testURL($url);
   }
 
-  // Eintrag ï¿½berprï¿½fen
+  // Eintrag überprüfen
   if ($_POST['entry'] == "") {
     $error = "Bitte schreiben Sie einen Eintrag!";
   }
@@ -377,12 +379,12 @@ global $db, $cfg, $client, $lang, $idart, $direkt_sichtbar, $email_benachrichtig
     if ($bbcode_aktiv) $entry = bbcode_ersetzen($entry);
   }
 
-  // Bilder prï¿½fen
+  // Bilder prüfen
   if (($_POST['image'] == "") || (in_array ($_POST['image'], $bilder))) {
     $image = $_POST['image'];
   }
 
-  // Uservariablen ï¿½berprï¿½fen
+  // Uservariablen überprüfen
   $user1 = htmlentities(strip_tags($_POST['user1']));
   $user2 = htmlentities(strip_tags($_POST['user2']));
   $user3 = htmlentities(strip_tags($_POST['user3']));
@@ -394,7 +396,7 @@ global $db, $cfg, $client, $lang, $idart, $direkt_sichtbar, $email_benachrichtig
 
 $spamerror = 0;
 
-if (!($_POST["check"] == "ruewalders"))
+if (!($_POST["captcha_code"] == $_SESSION["captcha_spam"]))
 {$spamerror++;}
 
 if ($spamerror > 0)
@@ -412,7 +414,7 @@ if ($spamerror > 0)
 // Funktionen Ende
 
 if ($smilies_aktiv) {
-  // Smilies-Array fï¿½llen
+  // Smilies-Array füllen
   $smilies = smilies_auslesen();
 }
 $bilder = bilder_liste();
@@ -430,7 +432,7 @@ if ($_POST) {
     echo "Fehler: " . $fehler;
   }
   elseif ($direkt_sichtbar) {
-    echo "<p>Vielen Dank fï¿½r Ihren Eintrag!</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>";
+    echo "<p>Vielen Dank f&uuml;r Ihren Eintrag!</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>";
     $formular_anzeigen = FALSE;
     if ($cookie_aktiv) cookie_setzen ($cookie_dauer);
   }
