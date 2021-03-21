@@ -52,17 +52,16 @@
     <td colspan="5">&nbsp;</td>
 </tr>
 <tr>
-  <tr>
-    <td colspan="5">Captcha:<br/>Um zu beweisen, dass Du kein Spam-Roboter bist, trage bitte in das Eingabefeld unten rechts die Zeichenfolge ein, die Du auf dem Bild links daneben erkennst.</td>
-  </tr>
-  <tr>
-    <td colspan="2">
+  <td colspan="5">Captcha:<br/>Um zu beweisen, dass Du kein Spam-Roboter bist, trage bitte in das Eingabefeld unten rechts die Zeichenfolge ein, die Du auf dem Bild links daneben erkennst.</td>
+</tr>
+<tr>
+  <td colspan="2">
 ###name:captcha_spam;type:captcha###
-   </td>
-    <td colspan="3">
+  </td>
+  <td colspan="3">
 ###name:captcha_code;type:text###
-</td>
-  </tr>
+  </td>
+</tr>
 <tr>
 <td colspan="5" align="right" valign="top"><input type="submit" name="Submit" value="Abschicken" /></td>
 </tr>
