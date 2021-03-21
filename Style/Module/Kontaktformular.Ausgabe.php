@@ -10,8 +10,6 @@
  * modified for captcha von Volker Uhlig
  ************************************************/
 
-session_start(); // session is required by captcha
- 
 class w3form {
     var $email, $aufgedroeselt, $form, $formularFeld, $user_Email, $user_From;
 
@@ -263,12 +261,10 @@ class w3form {
 
     // PRIVATE
     function formularFeldKorrekt($feld) {
-        // prüfung ob Captcha-Code 
+        // prüfung des Captcha-Code 
         if ($feld['name'] == 'captcha_code') { 
             if ($_POST['captcha_code'] != $_SESSION['captcha_spam']) {
-//          echo 'Du hast den Captcha-Code falsch eingegeben!';
-            echo 'Captcha-Code falsch: '.$_POST['captcha_code'].' session: '.$_SESSION['captcha_spam'];
-            return false;
+                return false;
             }
         }           
         
@@ -313,15 +309,9 @@ class w3form {
         return $feld;
     }
     
-     //PRIVATE
-    function add_captcha() {
-        echo "<p>Um zu beweisen, dass Du kein Spam-Roboter bist, trage bitte in das Eingabefeld unten rechts die Zeichenfolge ein, die Du auf dem Bild links daneben erkennst.</p>";
-        echo "<img src='verein/gaestebuch/captcha.html?RELOAD=' alt='Captcha' title='Klicken, um das Captcha neu zu laden' onclick='this.src+=1;document.getElementById('captcha_code').value='';' width=140 height=40 />";
-        echo "<input type='text' name='captcha_code' size='11'/>";
-    }
-    
     //PUBLIC
     function process() {
+        session_start(); // session is required by captcha
         if (!isset($_POST['sent'])) {
             $this->formularAusgabe();
         } elseif ($this->formularVollstaendig()) {

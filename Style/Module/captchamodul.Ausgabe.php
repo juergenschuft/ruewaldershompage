@@ -4,8 +4,7 @@
      * abgemalt bei:    http://www-coding.de/so-gehts-eigenes-captcha-mit-php/
      */
  
-// session_start(); 
-mail("juergen.schuft@web.de","modulCaptchaModulAusgabe1","session_id(): ".session_id());
+    session_start(); 
     unset($_SESSION['captcha_spam']);
    
     $fileDir            = 'upload/captcha/';                        // im ruewalder-cms angelegtes dir fuer captcha-kram
@@ -37,9 +36,6 @@ mail("juergen.schuft@web.de","modulCaptchaModulAusgabe1","session_id(): ".sessio
     // Zufälligen Text generieren und in der Session speichern //
     $text = rand_string($text_chars);
     $_SESSION['captcha_spam'] = $text;
-    $HTTP_SESSION_VARS["captcha_spam"] = $text;
-    
- mail("juergen.schuft@web.de","captcha__in_session inModulCaptchaModulAusgabe2",$_SESSION['captcha_spam'] . "session_id()" . session_id());
     
     // Header: Mitteilen, dass es sich um ein Bild handelt und dass dieses nicht im Cache gespeichert werden soll //
     header('Expires: Mon, 26 Jul 1990 05:00:00 GMT');
