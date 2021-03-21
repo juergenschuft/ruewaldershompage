@@ -43,19 +43,29 @@
 <p>&nbsp;</p>
 <table border="0">
 <tr>
-<td colspan="3">Bemerkungen/ W&uuml;nsche/ Fragen:</td>
+<td colspan="5">Bemerkungen/ W&uuml;nsche/ Fragen:</td>
 </tr>
 <tr>
-<td colspan="3">###name:Nachricht; type:textarea; cols:35; rows:5 ###</td>
+<td colspan="5">###name:Nachricht; type:textarea; cols:35; rows:5 ###</td>
 </tr>
+<tr>
+    <td colspan="5">&nbsp;</td>
+</tr>
+<tr>
+  <tr>
+    <td colspan="5">Captcha:<br/>Um zu beweisen, dass Du kein Spam-Roboter bist, trage bitte in das Eingabefeld unten rechts die Zeichenfolge ein, die Du auf dem Bild links daneben erkennst.</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+###name:captcha_spam;type:captcha###
+   </td>
+    <td colspan="3">
+###name:captcha_code;type:text###
+</td>
+  </tr>
 <tr>
 <td colspan="5" align="right" valign="top"><input type="submit" name="Submit" value="Abschicken" /></td>
 </tr>
 </table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
